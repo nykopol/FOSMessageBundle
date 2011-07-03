@@ -5,9 +5,9 @@ namespace Ornicar\MessageBundle\Document;
 use Doctrine\ODM\MongoDB\DocumentRepository;
 use Ornicar\MessageBundle\Model\MessageRepositoryInterface;
 use FOS\UserBundle\Model\User;
-use Zend\Paginator\Paginator;
-use ZendPaginatorAdapter\DoctrineMongoDBAdapter;
 use MongoId;
+use Pagerfanta\Pagerfanta;
+use Pagerfanta\Adapter\DoctrineODMMongoDBAdapter;
 
 class MessageRepository extends DocumentRepository implements MessageRepositoryInterface
 {
@@ -19,7 +19,7 @@ class MessageRepository extends DocumentRepository implements MessageRepositoryI
         $query = $this->createByUserQuery($user)->sort('createdAt', 'DESC');
 
         if ($asPaginator) {
-            return new Paginator(new DoctrineMongoDBAdapter($query));
+            return new Pagerfanta(new DoctrineODMMongoDBAdapter($query));
         }
 
         return array_values($query->getQuery()->execute()->toArray());
@@ -33,7 +33,7 @@ class MessageRepository extends DocumentRepository implements MessageRepositoryI
         $query = $this->createSentByUserQuery($user)->sort('createdAt', 'DESC');
 
         if ($asPaginator) {
-            return new Paginator(new DoctrineMongoDBAdapter($query));
+            return new Pagerfanta(new DoctrineODMMongoDBAdapter($query));
         }
 
         return array_values($query->getQuery()->execute()->toArray());

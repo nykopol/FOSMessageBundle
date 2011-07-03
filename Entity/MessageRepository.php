@@ -5,8 +5,8 @@ namespace Ornicar\MessageBundle\Entity;
 use Doctrine\ORM\EntityRepository;
 use Ornicar\MessageBundle\Model\MessageRepositoryInterface;
 use FOS\UserBundle\Model\User;
-use Zend\Paginator\Paginator;
-use ZendPaginatorAdapter\DoctrineORMAdapter;
+use Pagerfanta\Pagerfanta;
+use Pagerfanta\Adapter\DoctrineORMAdapter;
 
 class MessageRepository extends EntityRepository implements MessageRepositoryInterface
 {
@@ -21,7 +21,7 @@ class MessageRepository extends EntityRepository implements MessageRepositoryInt
             ->getQuery();
 
         if ($asPaginator) {
-            return new Paginator(new DoctrineORMAdapter($query));
+            return new Pagerfanta(new DoctrineORMAdapter($query));
         }
 
         return array_values($query->execute()->toArray());
@@ -38,7 +38,7 @@ class MessageRepository extends EntityRepository implements MessageRepositoryInt
             ->getQuery();
 
         if ($asPaginator) {
-            return new Paginator(new DoctrineORMAdapter($query));
+            return new Pagerfanta(new DoctrineORMAdapter($query));
         }
 
         return array_values($query->execute()->toArray());

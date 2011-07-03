@@ -41,9 +41,8 @@ class MessageController extends Controller
     {
         $user = $this->get('security.context')->getToken()->getUser();
         $messages = $this->get('ornicar_message.repository.message')->findRecentByUser($user, true);
-        $messages->setCurrentPageNumber($this->get('request')->query->get('page', 1));
-        $messages->setItemCountPerPage($this->container->getParameter('ornicar_message.paginator.messages_per_page'));
-        $messages->setPageRange(5);
+        $messages->setCurrentPage($this->get('request')->query->get('page', 1));
+        $messages->setMaxPerPage($this->container->getParameter('ornicar_message.paginator.messages_per_page'));
 
         return $this->render('OrnicarMessageBundle:Message:list.html.twig', array(
             'messages' => $messages,
@@ -55,9 +54,8 @@ class MessageController extends Controller
     {
         $user = $this->get('security.context')->getToken()->getUser();
         $messages = $this->get('ornicar_message.repository.message')->findRecentSentByUser($user, true);
-        $messages->setCurrentPageNumber($this->get('request')->query->get('page', 1));
-        $messages->setItemCountPerPage($this->container->getParameter('ornicar_message.paginator.messages_per_page'));
-        $messages->setPageRange(5);
+        $messages->setCurrentPage($this->get('request')->query->get('page', 1));
+        $messages->setMaxPerPage($this->container->getParameter('ornicar_message.paginator.messages_per_page'));
 
         return $this->render('OrnicarMessageBundle:Message:sent.html.twig', array(
             'messages' => $messages,
