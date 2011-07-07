@@ -7,12 +7,16 @@ use Symfony\Component\Form\AbstractType;
 
 class MessageType extends AbstractType
 {
-    
     public function buildForm(FormBuilder $builder, array $options)
     {
         $builder
             ->add('to', 'text')
             ->add('subject', 'text')
             ->add('body', 'textarea');
+    }
+
+    public function getName()
+    {
+        return 'message';
     }
 }
